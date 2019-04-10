@@ -6,6 +6,17 @@
     "homepage": "https://github.com/howard-university-web-services/howard_sidebar_menu_block",
     "license": "GPL-2.0+",
     "minimum-stability": "dev",
+    "authors": [
+        {
+          "name": "Dan Rogers",
+          "homepage": "https://www.drupal.org/u/dan_rogers",
+          "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/howard-university-web-services/howard_sidebar_menu_block/issues",
+        "source": "https://github.com/howard-university-web-services/howard_sidebar_menu_block"
+    },
     "extra": {
         "branch-alias": {
         "8.x-1.x": "1.x-dev"
