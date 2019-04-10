@@ -1,0 +1,9 @@
+name: 'Howard Sidebar Menu Block'
+type: module
+description: 'Custom block menu for Howard specific sidebar.'
+core: 8.x
+version: VERSION
+package: 'Howard University'
+
+dependencies:
+  - drupal:block

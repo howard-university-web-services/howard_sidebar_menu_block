@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * Implements various hooks and functions to run the Sidebar Menu module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Block\BlockPluginInterface;
+
+/**
+ * Implements hook_help().
+ *
+ * Shows the module's readme file on the help page.
+ */
+function howard_sidebar_menu_block_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.howard_sidebar_menu_block':
+      $filepath = dirname(__FILE__) . '/README.md';
+      if (file_exists($filepath)) {
+        $readme = file_get_contents($filepath);
+      }
+      else {
+        $filepath = dirname(__FILE__) . '/README.txt';
+        if (file_exists($filepath)) {
+          $readme = file_get_contents($filepath);
+        }
+      }
+      if (!isset($readme)) {
+        return NULL;
+      }
+      if (\Drupal::moduleHandler()->moduleExists('markdown')) {
+        // TODO Add markdown support.
+        $output = '<pre>' . $readme . '</pre>';
+      } else {
+        $output = '<pre>' . $readme . '</pre>';
+      }
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * This hook defines the template, also need to reference this in hook_block_view()
+ */
+function howard_sidebar_menu_block_theme($existing, $type, $theme, $path) {
+  $theme = array();
+  $theme['howard_sidebar_menu__main'] = array(
+    'base hook' => 'menu',
+    'render element' => 'menu',
+  );
+  $theme['block__howard_sidebar_menu_block'] = array(
+    'base hook' => 'block',
+    'render element' => 'block',
+  );
+  return $theme;
+}

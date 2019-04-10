@@ -1,0 +1,14 @@
+{
+    "name": "howard/howard_sidebar_menu_block",
+    "type": "drupal-module",
+    "description": "This module is designed to provide an interior page sidebar menu for Howard University",
+    "keywords": ["Drupal"],
+    "homepage": "https://bitbucket.org/idfivellc/idfive_move_description",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+        "8.x-1.x": "1.x-dev"
+        }
+    }
+}
