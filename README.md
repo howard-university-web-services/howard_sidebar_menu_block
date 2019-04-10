@@ -10,12 +10,18 @@ This module requires the following modules:
 
 * block
 
-INSTALLATION
+INSTALLATION AND UPDATES
 ------------
 
-* Install as you would normally install a contributed Drupal module. See:
-  https://www.drupal.org/docs/8/extending-drupal-8/installing-modules
-  for further information.
+**Install Via Composer:**
+```
+composer install howard/howard_sidebar_menu_block
+```
+
+**Update Via Composer:**
+```
+composer update howard/howard_sidebar_menu_block
+```
 
 CONFIGURATION
 -------------
