@@ -1,37 +1,29 @@
-INTRODUCTION
-------------
+# Howard Sidebar Menu Block
 
-This module is designed to display the main menu in a sidebar menu. It creates a block, which can then be placed in whatever region you desire. 
+This module is designed to display the main menu in a sidebar menu. It creates a block, which can then be placed in whatever region you desire.
 
-REQUIREMENTS
-------------
+## Requirements
 
 This module requires the following modules:
 
-* block
+- block
 
-INSTALLATION AND UPDATES
-------------
+## Installation and updates
 
-**Install Via Composer:**
-```
-composer install howard/howard_sidebar_menu_block
-```
+### Install Via Composer
 
-**Update Via Composer:**
-```
-composer update howard/howard_sidebar_menu_block
-```
+- `composer install howard/howard_sidebar_menu_block`
 
-CONFIGURATION
--------------
+### Update Via Composer
 
-* Configure user permissions in
+- `composer update howard/howard_sidebar_menu_block`
+
+## Configuration
+
+- Configure user permissions in
   Structure » Block Layout:
   (admin/structure/block)
 
-
-TROUBLESHOOTING
----------------
+## Troubleshooting
 
 If you are running into errors, be sure to check theme regions, and that you have added your block.
