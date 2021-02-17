@@ -2,7 +2,8 @@ name: 'Howard Sidebar Menu Block'
 type: module
 description: 'Custom block menu for Howard University specific sidebar.'
 core: 8.x
-version: VERSION
+core_version_requirement: ^8 || ^9
+version: '8.x-1.0'
 package: 'Howard University'
 
 dependencies:
