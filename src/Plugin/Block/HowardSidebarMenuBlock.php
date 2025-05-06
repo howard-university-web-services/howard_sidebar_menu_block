@@ -43,7 +43,7 @@ class HowardSidebarMenuBlock extends BlockBase {
 
     // Get parent link title and URL to display as "back link". Manually set Home for first level pages
     $parent = [];
-    if(isset($parent_link_id) && $parent_link_id !== NULL && $parent_link_id !== '') {
+    if($parent_link_id !== NULL && $parent_link_id !== '') {
       $parent['#title'] = $menu_link_manager->createInstance($parent_link_id)->getTitle();
       $url_obj = $menu_link_manager->createInstance($parent_link_id)->getUrlObject();
       $parent['#link'] = $url_obj->toString();
