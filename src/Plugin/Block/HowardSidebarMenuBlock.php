@@ -3,10 +3,9 @@
 namespace Drupal\howard_sidebar_menu_block\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Howard Sidebar Menu Block
+ * Howard Sidebar Menu Block.
  *
  * @Block(
  *   id = "howard_sidebar_menu_block",
@@ -14,7 +13,6 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class HowardSidebarMenuBlock extends BlockBase {
-
 
   /**
    * {@inheritdoc}
@@ -39,19 +37,20 @@ class HowardSidebarMenuBlock extends BlockBase {
 
     // But actually we need its parent.
     // Except for <front>. Which has no parent.
-    $parent_link_id = isset($active_trail[1]) ? $active_trail[1] : $active_trail[0];
+    $parent_link_id = $active_trail[1] ?? $active_trail[0];
 
-    // Get parent link title and URL to display as "back link". Manually set Home for first level pages
+    // Get parent link title and URL to display as "back link". Manually set Home for first level pages.
     $parent = [];
-    if($parent_link_id !== NULL && $parent_link_id !== '') {
+    if ($parent_link_id !== NULL && $parent_link_id !== '') {
       $parent['#title'] = $menu_link_manager->createInstance($parent_link_id)->getTitle();
       $url_obj = $menu_link_manager->createInstance($parent_link_id)->getUrlObject();
       $parent['#link'] = $url_obj->toString();
-    } else {
+    }
+    else {
       $parent['#title'] = 'Home';
       $parent['#link'] = '/';
     }
-    
+
     // Having the parent now we set it as starting point to build our custom tree.
     $parameters->setRoot($parent_link_id);
     $parameters->setMaxDepth(2);
@@ -69,16 +68,15 @@ class HowardSidebarMenuBlock extends BlockBase {
     // Finally, build a renderable array.
     $menu = $menu_tree->build($tree);
 
-    // Set custom theme in order to template
+    // Set custom theme in order to template.
     $menu['#theme'] = 'howard_sidebar_menu__main';
 
-    // Pass template, parent, and rendered menu
+    // Pass template, parent, and rendered menu.
     $build['#markup'] = \Drupal::service('renderer')->render($menu);
     $build['#parent'] = $parent;
 
     return $build;
 
   }
-
 
 }

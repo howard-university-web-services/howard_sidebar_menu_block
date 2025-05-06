@@ -29,7 +29,7 @@ function howard_sidebar_menu_block_help($route_name, RouteMatchInterface $route_
         return NULL;
       }
       if (\Drupal::moduleHandler()->moduleExists('markdown')) {
-        // TODO Add markdown support.
+        // @todo Add markdown support.
         $output = '<pre>' . $readme . '</pre>';
       }
       else {
