@@ -4,7 +4,7 @@
     "description": "This module is designed to provide an interior page sidebar menu for Howard University",
     "keywords": ["Drupal"],
     "homepage": "https://github.com/howard-university-web-services/howard_sidebar_menu_block",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
     "authors": [
         {

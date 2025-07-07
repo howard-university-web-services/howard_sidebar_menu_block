@@ -15,7 +15,7 @@
  *
  * @author Dan Rogers <dan.rogers@howard.edu>
  * @package howard_sidebar_menu_block
- * @version 11.0.2
+ * @version 11.0.3
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;

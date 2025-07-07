@@ -12,6 +12,11 @@
 namespace Drupal\howard_sidebar_menu_block\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Menu\MenuTreeInterface;
+use Drupal\Core\Menu\MenuLinkManagerInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Howard Sidebar Menu Block.
@@ -34,7 +39,65 @@ use Drupal\Core\Block\BlockBase;
  *   }
  * )
  */
-class HowardSidebarMenuBlock extends BlockBase {
+class HowardSidebarMenuBlock extends BlockBase implements ContainerInjectionInterface {
+
+  /**
+   * The menu tree service.
+   *
+   * @var \Drupal\Core\Menu\MenuTreeInterface
+   */
+  protected $menuTree;
+
+  /**
+   * The menu link manager.
+   *
+   * @var \Drupal\Core\Menu\MenuLinkManagerInterface
+   */
+  protected $menuLinkManager;
+
+  /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * Constructs a new HowardSidebarMenuBlock instance.
+   *
+   * @param array $configuration
+   *   The plugin configuration.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Menu\MenuTreeInterface $menu_tree
+   *   The menu tree service.
+   * @param \Drupal\Core\Menu\MenuLinkManagerInterface $menu_link_manager
+   *   The menu link manager.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer service.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MenuTreeInterface $menu_tree, MenuLinkManagerInterface $menu_link_manager, RendererInterface $renderer) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->menuTree = $menu_tree;
+    $this->menuLinkManager = $menu_link_manager;
+    $this->renderer = $renderer;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('menu.tree'),
+      $container->get('plugin.manager.menu.link'),
+      $container->get('renderer')
+    );
+  }
 
   /**
    * Builds the sidebar menu render array.
@@ -68,13 +131,11 @@ class HowardSidebarMenuBlock extends BlockBase {
 
     // Use the main menu as the primary navigation source.
     $menu_name = 'main';
-    $menu_tree = \Drupal::menuTree();
-    $menu_link_manager = \Drupal::service('plugin.manager.menu.link');
 
     // Get the current route's menu tree parameters.
     // This provides the active trail in *reverse order* where
     // the current active link is always the first array element.
-    $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+    $parameters = $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
     $active_trail = array_keys($parameters->activeTrail);
 
     // Determine the parent link ID for contextual navigation.
@@ -88,7 +149,7 @@ class HowardSidebarMenuBlock extends BlockBase {
     $parent = [];
     if ($parent_link_id !== NULL && $parent_link_id !== '') {
       // Get parent link details from the menu link manager.
-      $parent_link = $menu_link_manager->createInstance($parent_link_id);
+      $parent_link = $this->menuLinkManager->createInstance($parent_link_id);
       $parent['#title'] = $parent_link->getTitle();
       $url_obj = $parent_link->getUrlObject();
       $parent['#link'] = $url_obj->toString();
@@ -97,7 +158,6 @@ class HowardSidebarMenuBlock extends BlockBase {
       // Default fallback for pages without clear parent context.
       $parent['#title'] = 'Home';
       $parent['#link'] = '/';
-    }
     }
 
     // Configure menu tree parameters for contextual loading.
@@ -109,7 +169,7 @@ class HowardSidebarMenuBlock extends BlockBase {
     $parameters->excludeRoot();
     
     // Load the menu tree with our configured parameters.
-    $tree = $menu_tree->load($menu_name, $parameters);
+    $tree = $this->menuTree->load($menu_name, $parameters);
 
     // Apply menu tree manipulators for access control and sorting.
     // These ensure users only see items they have permission to access
@@ -119,10 +179,10 @@ class HowardSidebarMenuBlock extends BlockBase {
       ['callable' => 'menu.default_tree_manipulators:checkAccess'],
       ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
     ];
-    $tree = $menu_tree->transform($tree, $manipulators);
+    $tree = $this->menuTree->transform($tree, $manipulators);
 
     // Build a renderable array from the menu tree.
-    $menu = $menu_tree->build($tree);
+    $menu = $this->menuTree->build($tree);
 
     // Apply custom theme hook for template override capability.
     // This allows themes to provide custom templates for the sidebar menu.
@@ -130,7 +190,7 @@ class HowardSidebarMenuBlock extends BlockBase {
 
     // Render the menu and attach to the build array.
     // Pass both the rendered menu and parent context to the template.
-    $build['#markup'] = \Drupal::service('renderer')->render($menu);
+    $build['#markup'] = $this->renderer->render($menu);
     $build['#parent'] = $parent;
 
     return $build;
