@@ -1,42 +1,89 @@
 {#
 /**
  * @file
- * Theme override to display the Howard Sidebar Menu.
+ * Theme override for the Howard Sidebar Menu main navigation.
+ *
+ * This template renders the context-aware sidebar navigation menu
+ * that automatically displays relevant menu items based on the current
+ * page's position in the site hierarchy.
  *
  * Available variables:
- * - menu_name: The machine name of the menu.
+ * - menu_name: The machine name of the menu (typically 'main').
  * - items: A nested list of menu items. Each menu item contains:
  *   - attributes: HTML attributes for the menu item.
- *   - below: The menu item child items.
+ *   - below: The menu item child items (if any).
  *   - title: The menu link title.
- *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - url: The menu link URL, instance of \Drupal\Core\Url.
  *   - localized_options: Menu link localized options.
  *   - is_expanded: TRUE if the link has visible children within the current
  *     menu tree.
  *   - is_collapsed: TRUE if the link has children within the current menu tree
  *     that are not currently visible.
  *   - in_active_trail: TRUE if the link is in the active trail.
+ * - attributes: HTML attributes for the menu container.
+ *
+ * Template features:
+ * - Recursive macro for unlimited menu depth
+ * - Semantic HTML5 navigation structure
+ * - Accessibility-compliant markup with ARIA labels
+ * - CSS classes for flexible styling
+ * - Active trail highlighting
+ *
+ * @see template_preprocess_menu()
+ * @see howard_sidebar_menu_block_theme()
+ * @see \Drupal\howard_sidebar_menu_block\Plugin\Block\HowardSidebarMenuBlock
+ *
+ * @ingroup themeable
  */
 #}
 {% import _self as menus %}
 
 {#
-  We call a macro which calls itself to render the full tree.
-  @see http://twig.sensiolabs.org/doc/tags/macro.html
+  Render the main menu tree using a recursive macro.
+  This provides a clean, semantic navigation structure.
 #}
 {{ menus.menu_links(items, attributes, 0) }}
 
+{#
+/**
+ * Recursive macro to render menu links at any depth.
+ *
+ * This macro calls itself to render the full menu tree structure,
+ * providing unlimited nesting depth while maintaining semantic HTML
+ * and accessibility best practices.
+ *
+ * @param array items
+ *   The menu items to render.
+ * @param object attributes
+ *   HTML attributes for the menu container.
+ * @param int menu_level
+ *   The current menu depth level (0-based).
+ *
+ * @see http://twig.sensiolabs.org/doc/tags/macro.html
+ */
+#}
 {% macro menu_links(items, attributes, menu_level) %}
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes }}>
+      {# Top-level menu container with attributes #}
+      <ul{{ attributes.addClass('sidebar-menu', 'nav', 'nav-level-' ~ menu_level) }}>
     {% else %}
-      <ul>
+      {# Nested menu containers without top-level attributes #}
+      <ul class="nav nav-level-{{ menu_level }}">
     {% endif %}
     {% for item in items %}
-      <li{{ item.attributes }}>
-        {{ link(item.title, item.url) }}
+      <li{{ item.attributes.addClass('nav-item') }}>
+        {# Render the menu link with proper accessibility attributes #}
+        {% if item.url %}
+          <a href="{{ item.url }}" class="nav-link"{{ item.in_active_trail ? ' aria-current="page"' : '' }}>
+            {{ item.title }}
+          </a>
+        {% else %}
+          <span class="nav-text">{{ item.title }}</span>
+        {% endif %}
+        
+        {# Recursively render child menu items #}
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}

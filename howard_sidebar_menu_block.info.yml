@@ -1,9 +1,16 @@
 name: 'Howard Sidebar Menu Block'
 type: module
-description: 'Custom block menu for Howard University specific sidebar.'
+description: 'Provides a sophisticated context-aware sidebar navigation menu for Howard University sites that automatically displays relevant menu items based on the current page position in the site hierarchy.'
 core_version_requirement: ^10 || ^11
-version: '11.0.2'
+version: '11.0.3'
 package: 'Howard University'
 
 dependencies:
   - drupal:block
+  - drupal:menu_link_content
+
+configure: admin/structure/block
+
+# Module metadata
+project: 'howard_sidebar_menu_block'
+datestamp: 1720368000

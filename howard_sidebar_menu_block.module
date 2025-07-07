@@ -2,7 +2,20 @@
 
 /**
  * @file
- * Implements various hooks and functions to run the Sidebar Menu module.
+ * Howard Sidebar Menu Block module.
+ *
+ * This module provides a sophisticated sidebar navigation system for
+ * Howard University's Drupal sites. It creates context-aware menu blocks
+ * that automatically display relevant navigation options based on the
+ * current page's position in the site hierarchy.
+ *
+ * The module implements hook_help() to provide comprehensive help text
+ * and hook_theme() to enable custom template overrides for flexible
+ * theming and styling options.
+ *
+ * @author Dan Rogers <dan.rogers@howard.edu>
+ * @package howard_sidebar_menu_block
+ * @version 11.0.2
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -10,29 +23,56 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  *
- * Shows the module's readme file on the help page.
+ * Provides help and information about the Howard Sidebar Menu Block module.
+ * This function displays the module's README file content on the help page,
+ * giving administrators and developers comprehensive information about
+ * installation, configuration, and usage.
+ *
+ * The help text includes:
+ * - Module overview and purpose
+ * - Installation instructions
+ * - Configuration guidelines
+ * - Troubleshooting information
+ * - Customization examples
+ *
+ * @param string $route_name
+ *   The route name for which help is being requested.
+ * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+ *   The current route match object containing route parameters.
+ *
+ * @return string|null
+ *   The help text as HTML markup, or NULL if no help is available
+ *   for the given route.
  */
 function howard_sidebar_menu_block_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.howard_sidebar_menu_block':
+      // Attempt to load README.md first (preferred format).
       $filepath = dirname(__FILE__) . '/README.md';
       if (file_exists($filepath)) {
         $readme = file_get_contents($filepath);
       }
       else {
+        // Fallback to README.txt if Markdown version not available.
         $filepath = dirname(__FILE__) . '/README.txt';
         if (file_exists($filepath)) {
           $readme = file_get_contents($filepath);
         }
       }
+      
+      // Return NULL if no README file is found.
       if (!isset($readme)) {
         return NULL;
       }
+      
+      // Check if Markdown module is available for enhanced formatting.
       if (\Drupal::moduleHandler()->moduleExists('markdown')) {
-        // @todo Add markdown support.
+        // @todo Add proper Markdown processing when module is available.
+        // For now, display as preformatted text.
         $output = '<pre>' . $readme . '</pre>';
       }
       else {
+        // Display as preformatted text for consistent formatting.
         $output = '<pre>' . $readme . '</pre>';
       }
 
@@ -43,17 +83,53 @@ function howard_sidebar_menu_block_help($route_name, RouteMatchInterface $route_
 /**
  * Implements hook_theme().
  *
- * This hook defines the template, also need to reference this in hook_block_view().
+ * Defines custom theme hooks for the Howard Sidebar Menu Block module.
+ * This allows for flexible theming and template overrides to customize
+ * the appearance and structure of the sidebar menu.
+ *
+ * The module provides two main theme hooks:
+ * 1. howard_sidebar_menu__main - For the menu structure itself
+ * 2. block__howard_sidebar_menu_block - For the block wrapper
+ *
+ * These theme hooks enable:
+ * - Custom Twig templates in themes
+ * - Theme-specific styling and markup
+ * - Responsive design implementations
+ * - Accessibility enhancements
+ * - Integration with design systems
+ *
+ * @param array $existing
+ *   An array of existing theme implementations.
+ * @param string $type
+ *   The type of theme implementation (module, theme, etc.).
+ * @param string $theme
+ *   The name of the theme.
+ * @param string $path
+ *   The path to the theme.
+ *
+ * @return array
+ *   An array of theme hook definitions with the following structure:
+ *   - Theme hook name as key
+ *   - Configuration array with base hook and render element
  */
 function howard_sidebar_menu_block_theme($existing, $type, $theme, $path) {
-  $theme = [];
-  $theme['howard_sidebar_menu__main'] = [
+  $theme_hooks = [];
+  
+  // Define the main sidebar menu theme hook.
+  // This theme hook is used for rendering the actual menu structure
+  // and provides flexibility for custom Twig templates.
+  $theme_hooks['howard_sidebar_menu__main'] = [
     'base hook' => 'menu',
     'render element' => 'menu',
   ];
-  $theme['block__howard_sidebar_menu_block'] = [
+  
+  // Define the block wrapper theme hook.
+  // This theme hook allows customization of the block container
+  // and integration with theme-specific block styling.
+  $theme_hooks['block__howard_sidebar_menu_block'] = [
     'base hook' => 'block',
     'render element' => 'block',
   ];
-  return $theme;
+  
+  return $theme_hooks;
 }
