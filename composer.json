@@ -1,25 +1,40 @@
 {
     "name": "howard/howard_sidebar_menu_block",
     "type": "drupal-module",
-    "description": "This module is designed to provide an interior page sidebar menu for Howard University",
-    "keywords": ["Drupal"],
+    "description": "Provides a sophisticated context-aware sidebar navigation menu for Howard University sites that automatically displays relevant menu items based on the current page position in the site hierarchy.",
+    "keywords": ["Drupal", "module", "sidebar", "menu", "navigation", "howard-university"],
     "homepage": "https://github.com/howard-university-web-services/howard_sidebar_menu_block",
     "license": "GPL-2.0-or-later",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "authors": [
         {
-          "name": "Dan Rogers",
-          "homepage": "https://www.drupal.org/u/dan_rogers",
-          "role": "Maintainer"
+            "name": "Dan Rogers",
+            "homepage": "https://www.drupal.org/u/dan_rogers",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Howard University Web Services",
+            "homepage": "https://github.com/howard-university-web-services",
+            "role": "Developer"
         }
     ],
     "support": {
         "issues": "https://github.com/howard-university-web-services/howard_sidebar_menu_block/issues",
-        "source": "https://github.com/howard-university-web-services/howard_sidebar_menu_block"
+        "source": "https://github.com/howard-university-web-services/howard_sidebar_menu_block",
+        "docs": "https://github.com/howard-university-web-services/howard_sidebar_menu_block/blob/main/README.md"
+    },
+    "require": {
+        "drupal/core": "^10 || ^11"
     },
     "extra": {
-        "branch-alias": {
-        "8.x-1.x": "1.x-dev"
+        "drupal": {
+            "version": "11.0.4",
+            "datestamp": "1751992945",
+            "security-coverage": {
+                "status": "not-covered",
+                "message": "Custom module - not covered by Drupal Security Team"
+            }
         }
     }
 }

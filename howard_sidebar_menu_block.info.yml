@@ -11,6 +11,5 @@ dependencies:
 
 configure: admin/structure/block
 
-# Module metadata
-project: 'howard_sidebar_menu_block'
-datestamp: 1751989342
+# Custom module - not distributed via drupal.org
+# Available via Packagist: howard/howard_sidebar_menu_block

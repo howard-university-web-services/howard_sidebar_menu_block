@@ -14,7 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [11.0.4] - 2025-07-08
 
+### Changed
+
+- **Updated module metadata for Packagist distribution**: Configured module as custom Packagist package instead of Drupal.org distribution
+- Enhanced composer.json with better metadata, requirements, and Packagist-specific configuration
+- Removed Drupal.org-specific project metadata from .info.yml file
+- Added security coverage information indicating custom module status
+- Updated minimum stability to "stable" with prefer-stable configuration
+
 ### Fixed
+
 - Fixed ContainerInjectionInterface compatibility issue by switching to ContainerFactoryPluginInterface
 - Corrected service name from 'menu.tree' to 'menu.link_tree' to resolve ServiceNotFoundException
 - Updated type hints from MenuTreeInterface to MenuLinkTreeInterface to fix TypeError
