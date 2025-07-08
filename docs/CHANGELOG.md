@@ -12,6 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Performance optimization improvements
 - Additional customization options
 
+## [11.0.4] - 2025-07-08
+
+### Fixed
+- Fixed ContainerInjectionInterface compatibility issue by switching to ContainerFactoryPluginInterface
+- Corrected service name from 'menu.tree' to 'menu.link_tree' to resolve ServiceNotFoundException
+- Updated type hints from MenuTreeInterface to MenuLinkTreeInterface to fix TypeError
+- Improved dependency injection implementation for proper Drupal block plugin standards
+
+### Technical Improvements
+- Enhanced error handling and service resolution
+- Better compatibility with Drupal core menu services
+- Improved code maintainability and standards compliance
+
 ## [11.0.3] - 2025-07-07
 
 ### Added

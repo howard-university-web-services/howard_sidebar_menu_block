@@ -1,6 +1,6 @@
 # Howard Sidebar Menu Block
 
-![Drupal 10](https://img.shields.io/badge/Drupal-10-blue) ![Drupal 11](https://img.shields.io/badge/Drupal-11-blue) ![Version](https://img.shields.io/badge/version-11.0.3-green) ![License](https://img.shields.io/badge/license-GPL--2.0+-blue)
+![Drupal 10](https://img.shields.io/badge/Drupal-10-blue) ![Drupal 11](https://img.shields.io/badge/Drupal-11-blue) ![Version](https://img.shields.io/badge/version-11.0.4-green) ![License](https://img.shields.io/badge/license-GPL--2.0+-blue)
 
 A sophisticated sidebar navigation module for Howard University's Drupal sites that provides intelligent, context-aware menu navigation based on the current page's position in the site hierarchy.
 

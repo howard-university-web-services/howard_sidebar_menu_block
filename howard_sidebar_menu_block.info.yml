@@ -2,7 +2,7 @@ name: 'Howard Sidebar Menu Block'
 type: module
 description: 'Provides a sophisticated context-aware sidebar navigation menu for Howard University sites that automatically displays relevant menu items based on the current page position in the site hierarchy.'
 core_version_requirement: ^10 || ^11
-version: '11.0.3'
+version: '11.0.4'
 package: 'Howard University'
 
 dependencies:
@@ -13,4 +13,4 @@ configure: admin/structure/block
 
 # Module metadata
 project: 'howard_sidebar_menu_block'
-datestamp: 1720368000
+datestamp: 1751989342

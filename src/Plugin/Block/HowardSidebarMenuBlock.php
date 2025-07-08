@@ -12,10 +12,10 @@
 namespace Drupal\howard_sidebar_menu_block\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Menu\MenuTreeInterface;
+use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\Core\Render\RendererInterface;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -39,12 +39,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-class HowardSidebarMenuBlock extends BlockBase implements ContainerInjectionInterface {
+class HowardSidebarMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * The menu tree service.
    *
-   * @var \Drupal\Core\Menu\MenuTreeInterface
+   * @var \Drupal\Core\Menu\MenuLinkTreeInterface
    */
   protected $menuTree;
 
@@ -71,14 +71,14 @@ class HowardSidebarMenuBlock extends BlockBase implements ContainerInjectionInte
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Menu\MenuTreeInterface $menu_tree
+   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menu_tree
    *   The menu tree service.
    * @param \Drupal\Core\Menu\MenuLinkManagerInterface $menu_link_manager
    *   The menu link manager.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MenuTreeInterface $menu_tree, MenuLinkManagerInterface $menu_link_manager, RendererInterface $renderer) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MenuLinkTreeInterface $menu_tree, MenuLinkManagerInterface $menu_link_manager, RendererInterface $renderer) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->menuTree = $menu_tree;
     $this->menuLinkManager = $menu_link_manager;
@@ -93,7 +93,7 @@ class HowardSidebarMenuBlock extends BlockBase implements ContainerInjectionInte
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('menu.tree'),
+      $container->get('menu.link_tree'),
       $container->get('plugin.manager.menu.link'),
       $container->get('renderer')
     );
