@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Performance optimization improvements
 - Additional customization options
 
-## [11.0.4] - 2025-07-08
+## [11.0.5] - 2025-07-08
 
 ### Changed
 
@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed Drupal.org-specific project metadata from .info.yml file
 - Added security coverage information indicating custom module status
 - Updated minimum stability to "stable" with prefer-stable configuration
+
+## [11.0.4] - 2025-07-08
 
 ### Fixed
 
