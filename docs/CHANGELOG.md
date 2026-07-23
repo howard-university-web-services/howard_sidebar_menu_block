@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planning
-- Enhanced accessibility features
-- Performance optimization improvements
-- Additional customization options
+## [11.0.6] - 2026-07-23
+
+### Added
+
+- **`.gitignore`**: Added standard ignore file covering `.DS_Store`, `.idea/`, `.vscode/`, `*.log`, `*.bak`, `tmp/`, `temp/`, `.env`, `settings.local.php`, `services.local.yml`.
 
 ## [11.0.5] - 2025-07-08
 
